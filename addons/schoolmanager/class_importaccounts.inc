@@ -90,7 +90,7 @@ class importaccounts extends plugin{
         /* initiate smarty */
         $smarty=get_smarty ();
 
-        /* Import students or teachers */
+        /* Import (students and parents), (students only) or (teachers only) */
         $smarty->assign ("import_account_type",$import_account_type);
 
 
@@ -407,6 +407,7 @@ class importaccounts extends plugin{
                     $smarty->assign ("data",array_slice($this->csvinfo['data'], 0, 5));
                 }
                 else {
+<<<<<<< Updated upstream
                     /* prepare for reloading this phase's web page again */
                     $smarty->assign("templates",$this->csvinfo['templates']['formfields']);
                     $smarty->assign("ous_available",$this->csvinfo['ou_tree']['formfields']);
@@ -422,7 +423,31 @@ class importaccounts extends plugin{
                     $smarty->assign("preset_sel_ldap_match_attr_birthday", $this->csvinfo['sel_ldap_match_attr_birthday']);
                     $smarty->assign("preset_sel_ldap_match_attr_gender", $this->csvinfo['sel_ldap_match_attr_gender']);
                     $smarty->assign("preset_add_course_members_to_class_group", $this->csvinfo['add_course_members_to_class_group']);
+=======
+                    $reloadphase2 = TRUE;
+>>>>>>> Stashed changes
                 }
+            } else {
+                /* Something is not right! */
+                $reloadphase2 = TRUE;
+                msg_dialog::display (_ ("Error"), _("Something went wrong! Something from the form went missing! Please try again."), ERROR_DIALOG);
+            }
+            if ($reloadphase2 === TRUE) {
+                /* prepare for reloading this phase's web page again */
+                $smarty->assign("templates",$this->csvinfo['templates']['formfields']);
+                $smarty->assign("ous_available",$this->csvinfo['ou_tree']['formfields']);
+                $smarty->assign("preset_template_".$import_account_type, $this->csvinfo['template_main']);
+                $smarty->assign("preset_template_".$import_account_type."_aux", $this->csvinfo['template_aux']);
+                $smarty->assign("preset_ou_groups", $this->csvinfo['ou_groups']);
+                $smarty->assign("preset_domain_groups", $this->csvinfo['domain_groups']);
+                $smarty->assign("preset_accounts_in_class_ou", $this->csvinfo['accounts_in_class_ou']);
+                $smarty->assign("preset_try_mail_as_uid", $this->csvinfo['try_mail_as_uid']);
+                $smarty->assign("preset_sel_ldap_match_attr_studentid", $this->csvinfo['sel_ldap_match_attr_studentid']);
+                $smarty->assign("preset_sel_ldap_match_attr_name", $this->csvinfo['sel_ldap_match_attr_name']);
+                $smarty->assign("preset_sel_ldap_match_attr_snname", $this->csvinfo['sel_ldap_match_attr_snname']);
+                $smarty->assign("preset_sel_ldap_match_attr_birthday", $this->csvinfo['sel_ldap_match_attr_birthday']);
+                $smarty->assign("preset_sel_ldap_match_attr_gender", $this->csvinfo['sel_ldap_match_attr_gender']);
+                $smarty->assign("preset_add_course_members_to_class_group", $this->csvinfo['add_course_members_to_class_group']);
             }
         }
 
@@ -1000,7 +1025,15 @@ class importaccounts extends plugin{
                     if ($this->csvinfo['sel_ldap_match_attr_birthday'])  $test_attrs[] = "dateOfBirth";
 
                     /* detect status */
+<<<<<<< Updated upstream
                     if ($this->compareObjects($row['main_account'], $gosa_account, $test_attrs, "", TRUE))
+=======
+<<<<<<< Updated upstream
+                    if ($this->compareObjects($row['main_account'], $gosa_account, $test_attrs, "", TRUE);)
+=======
+                    if ($this->compareObjects($row['main_account'], $gosa_account, $test_attrs, "", TRUE)===TRUE)
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
                     {
                         if((!isset($row['main_account']['uid'][0])) || ($row['main_account']['uid'][0]==="{%uid}"))
                         {
